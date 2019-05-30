@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="icon" type="image/x-icon" href="./favicon.ico" />
+   <link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+    <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
+    <script>
+
+        var app=angular.module('myapp',[]);
+        /*app.filter('trustAsResourceUrl', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+}])*/
+        app.controller("mycontroller",function ($scope,$http,$location,$sce) {
+            $scope.IP=function(){
+                console.log("ip信息来自于ip-api.com")
+                $http.get("http://ip-api.com/json?").success(function(request){
+                    $scope.Ip=request
+                })
+            }
+            $scope._key = function () {
+
+                if(event.keyCode ==13){
+                    if($scope.context.substring(0, 7)=='http://'||$scope.context.substring(0, 8)=='https://'){
+                        window.open($scope.context.replace(" ","+"));
+                    }else {
+                        //location=$scope.value.url+$scope.context.replace(" ","+");
+                    window.open($scope.value.url+$scope.context.replace(" ","+"));
+                    }
+
+                }
+
+            };
+
+            $scope.values = [
+                {name : "stackoverflow.com", url : "https://stackoverflow.com/search?q=", icon : ""},
+                {name : "阿里矢量图库", url : "https://www.iconfont.cn/search/index?q=", icon : ""},
+		{name : "bing.com---必应", url : "https://cn.bing.com/search?q=", icon : ""},
+                {name : "google.com---谷歌", url : "https://www.google.com/search?q=", icon : ""},
+		{name : "github.com", url : "https://github.com/?q=", icon : ""},
+		{name : "gitee.com---码云", url : "https://gitee.com/search?q=", icon : ""},
+
+		{name : "天眼查", url : "https://www.tianyancha.com/search?key=", icon : ""},
+		{name : "企查查", url : "https://www.qichacha.com/search?key=", icon : ""},
+		{name : "baidu.com---百度", url : "https://www.baidu.com/s?wd=", icon : ""},
+                {name : "sogou.com---搜狗", url : "https://www.sogou.com/web?query=", icon : ""},
+                {name : "so.com---360", url : "https://www.so.com/s?q=", icon : ""}
+            ];
+            $scope.urls = [
+                {name : "请求模拟（跨域请求需服务器端设置相应参数）", url : "", icon : ""},
+                {name : "翻译", url : "http://dregs.52hz.world/fy.html", icon : ""},
+                {name : "工具", url : "", icon : ""}
+
+            ];
+            $scope.value=$scope.values[0]
+            $scope.url=$scope.urls[2]
+            $scope.urls[0].url = $sce.trustAsResourceUrl("./html/json.html");
+            $scope.urls[1].url = $sce.trustAsResourceUrl("./html/fy.html");
+        })
+    </script>
+
+    <style media="screen and (min-width: 640px)">
+        #data{
+            padding-left: 400px;
+        }
+        #num{
+             border-radius: 5px;
+         }
+        #in{
+            border-radius: 5px;
+        }
+        #gui{
+            margin-left: 0;
+            margin-right: 0;
+
+        }
+    </style>
+    <style media="screen and (max-width: 640px)">
+
+       #num{
+            border-radius: 5px;
+        }
+       #in{
+           border-radius: 5px;
+       }
+       #gui{
+           margin-left: 0;
+           margin-right: 0;
+
+       }
+    </style>
+    <title>大佬！！！自己去网上查！！！</title>
+</head>
+<body ng-app="myapp" ng-controller="mycontroller">
+
+<br>
+<br>
+<div style="font-size: 72px;width:72px;height:72px;margin:0 auto;" >🐳</div>
+<br>
+<br>
+<br>
+<div class="large-20 columns" id="gui" ng-init="IP()">
+    <div class="row collapse prefix-radius">
+        <div class="small-3 columns">
+            <select id="num" class="prefix" ng-model="value"  ng-options="x.name for x in values">
+            </select>
+        </div>
+        <div class="small-9 columns">
+            <input type="text" placeholder="搜点什么吧···" ng-keydown="_key()" ng-model="context" id="in">
+        </div>
+    </div>
+</div>
+<div id="data" onselectstart="return false;">
+<span class="data">国家/地区{{Ip.country}}/{{Ip.city}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="data">本机IP：{{Ip.query}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="data">经度：{{Ip.lat}}&nbsp;&nbsp;|&nbsp;&nbsp;
+维度：{{Ip.lon}}</span></div>
+<br>
+<br>
+<a href="http://dregs.52hz.world:9000">🐋网盘地址</a>
+<br>
+<br><!-- {{map| trustThisUrl }} -->
+<select id="num"  ng-model="url"  ng-options="x.name for x in urls">
+            </select>
+<iframe ng-src="{{url.url}}" width="100%" height="450px" frameborder="0"></iframe>
+</body>
+<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+
+eruda.init();
+
+console.log('%c        ________','color:red')
+console.log('%c        \\______ \\   _______    ____      ____     ______','color:red')
+console.log('%c         |    |  \\  \\_  __ \\ _/ __ \\    / ___\\   /  ___/','color:red')
+console.log('%c         |    `   \\  |  | \\/ \\  ___/   / /_/  >  \\___ \\','color:red')
+console.log('%c        /_______  /  |__|     \\___  >  \\___  /  /____  >','color:red')
+console.log('%c                \\/                \\/  /_____/        \\/\n','color:red')
+</script>
+</html>

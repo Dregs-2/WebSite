@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
+    <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script> 
+    <script>
+
+        var app=angular.module('myapp',[]);
+
+        app.controller("mycontroller",function ($scope,$http,$location) {
+           $scope.RequestData={}
+            $scope._key = function () {
+                if(event.keyCode ==13){
+                    $scope.RequestData.from=$scope.fv.from
+                    $scope.RequestData.to=$scope.tv.to
+                    $scope.RequestData.id=$scope.iv.id
+                    $scope.RequestData.text=$scope.value
+                    $scope.request($scope.RequestData)
+                }
+
+            };
+            $scope.request = function(RequestData){
+                console.log(RequestData)
+                $http.post('http://dregs.52hz.world:59110/tran', RequestData).success(function(response){
+                    console.log(response)
+                    $scope.valued=response
+                });
+            }
+           
+            $scope.froms = [
+                {name : "中文",from : "zh"},
+                {name : "英语",from : "en"},
+                {name : "日文",from : "jp"},
+                {name : "韩语",from : "ko"},
+                {name : "法语",from : "fr"},
+                {name : "德语",from : "de"}
+            ];
+            $scope.tos = [
+                {name : "中文",to : "zh"},
+                {name : "英语",to : "en"},
+                {name : "日文",to : "jp"},
+                {name : "韩语",to : "ko"},
+                {name : "法语",to : "fr"},
+                {name : "德语",to : "de"}
+            ];
+            $scope.ids = [
+                {name : "谷歌",id : "0"},
+                {name : "百度",id : "1"},
+                {name : "有道",id : "2"},
+                {name : "腾讯",id : "3"},
+                {name : "搜狗",id : "4"},
+            ];
+            $scope.fv=$scope.froms[0]
+            $scope.tv=$scope.tos[1]
+            $scope.iv=$scope.ids[0]
+        })
+    </script>
+    
+   
+    <title>这是一个没什么用的翻译网页</title>
+</head>
+<body ng-app="myapp" ng-controller="mycontroller">
+    <select id="num" class="prefix" ng-model="fv"  ng-options="x.name for x in froms">
+            </select>
+
+            <select id="num" class="prefix" ng-model="tv"  ng-options="x.name for x in tos">
+            </select>
+            <select id="num" class="prefix" ng-model="iv"  ng-options="x.name for x in ids">
+            </select>
+            <input ng-model="value"  ng-keydown="_key()">
+           <!--  <input ng-model="valued" style="height: 200px"> -->
+            <textarea rows="10" cols="30">
+                {{valued}}
+</textarea>
+</body>
+</html>
+
+
