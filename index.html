@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.js"></script>
 	<link rel="icon" type="image/x-icon" href="./favicon.ico" />
-	<link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.min.css">
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/foundation/5.5.3/css/foundation.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.js"></script>
     <script src="https://cdn.staticfile.org/foundation/5.5.3/js/foundation.min.js"></script>
     <script src="https://cdn.staticfile.org/foundation/5.5.3/js/vendor/modernizr.js"></script>
     <script>
@@ -17,6 +17,7 @@
 			return $sce.trustAsResourceUrl(val);
 		};}])*/
         app.controller("mycontroller",function ($scope,$http,$location,$sce) {
+			$scope.Ip={"country":"获取中~","query":"获取中~","city":"获取中~","lon":"获取中~","lat":"获取中~"}
             $scope.IP=function(){
                 console.log("ip信息来自于ip-api.com")
                 $http.get("http://ip-api.com/json?").success(function(request){
@@ -92,7 +93,7 @@
 
 <br>
 <br>
-<div style="font-size: 72px;width:72px;height:72px;margin:0 auto;" >🐳</div>
+<div style="font-size: 72px;width:72px;height:72px;margin:0 auto;" ><a href="https://github.com/Dregs-2/WebSite">🐳</a></div>
 <br>
 <br>
 <br>
@@ -113,7 +114,7 @@
 </div>
 <br>
 <br>
-<a href="http://dregs.52hz.world:9000">🐋网盘地址</a>
+<div><a href="http://dregs.52hz.world:9000">🐋网盘地址</a><a href="http://52hz.world:10000" style="float:right">💓聊天室💓</a></div>
 <br>
 <br><!-- {{map| trustThisUrl }} -->
 <select id="num"  ng-model="url"  ng-options="x.name for x in urls"></select>
